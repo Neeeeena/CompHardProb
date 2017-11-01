@@ -41,4 +41,14 @@ public class Edge {
     public void setMirrorWeight(int w) {
         this.mirrorWeight = w;
     }
+    
+    public int getOtherNode(int nodeid) {
+    	if(nodeid == this.fromNode)
+    		return this.toNode;
+    	else if(nodeid == this.toNode)
+    		return this.fromNode;
+    	else
+    		return -1;
+    				
+    }
 }
