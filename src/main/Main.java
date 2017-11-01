@@ -10,6 +10,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import model.Edge;
+import model.MST;
 import model.SpanningTree;
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
         HashMap<Integer,Edge> edges = new HashMap<Integer,Edge>();
         HashMap<Integer, ArrayList<Edge>> nodeToEdge = new HashMap<Integer,ArrayList<Edge>>();
         int idi = 0;
-        BufferedReader br = new BufferedReader(new FileReader("testTimeGlass.uwg"));
+        BufferedReader br = new BufferedReader(new FileReader("test02.uwg"));
         try {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -72,22 +73,17 @@ public class Main {
         }
 
 
-        for(int i = 0; i < edges.size(); i++) {
+   /*     for(int i = 0; i < edges.size(); i++) {
             System.out.println(edges.get(i).getWeight());
             System.out.println(edges.get(i).getMirrorWeight());
         }
 
         System.out.println(everything);
         
-        
-        
-        HashSet<Integer> spanningTree = new HashSet<Integer>();
-        spanningTree.add(0);
-        spanningTree.add(2);
-        spanningTree.add(4);
-        spanningTree.add(5);
+        */
+       
        // SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
-        SpanningTree st = new SpanningTree(getInitialSpanningTree(nodeToEdge), edges, nodeToEdge);
+        SpanningTree st = new SpanningTree(MST.getInitialSpanningTree(nodeToEdge), edges, nodeToEdge);
 
         
         st.FindMFMST();
@@ -102,29 +98,6 @@ public class Main {
 
     }
     
-    private static HashSet<Integer> getInitialSpanningTree(HashMap<Integer, ArrayList<Edge>> nodeToEdge) {
-    	int nodeCursor = 1;
-    	HashSet<Integer> visitedNodes = new HashSet<Integer>();
-    	HashSet<Integer> spanningTree = new HashSet<Integer>();
-    	Stack<Edge> availableEdges = new Stack<Edge>();
-    	visitedNodes.add(1);
-    	while(visitedNodes.size() < nodeToEdge.size()) {
-    		for (Edge edge : nodeToEdge.get(nodeCursor)) {
-    			int neighbourNode = edge.getOtherNode(nodeCursor);
-    			if(!visitedNodes.contains(neighbourNode))
-    				availableEdges.add(edge.setFromNode(nodeCursor));
-    		}
-    		
-    		Edge nextEdge = availableEdges.pop();
-    		while(visitedNodes.contains(nextEdge.getToNode())) {
-    			nextEdge = availableEdges.pop();
-    		}
-    		spanningTree.add(nextEdge.getId());
-    		nodeCursor = nextEdge.getToNode();
-    		visitedNodes.add(nodeCursor);
-    	}
-    	return spanningTree;
-    }
     
     
     
