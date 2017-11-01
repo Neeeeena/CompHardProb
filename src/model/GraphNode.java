@@ -3,11 +3,11 @@ package model;
 import java.util.HashSet;
 
 public class GraphNode {
-	public Edge edge;
+	public Integer node;
 	public HashSet<Integer> path;
 	
-	public GraphNode(Edge edge, HashSet<Integer> path){
-		edge = edge;
+	public GraphNode(Integer node, HashSet<Integer> path){
+		this.node = node;
 		this.path = path;
 	}
 }

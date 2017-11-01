@@ -3,18 +3,22 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 
 import model.Edge;
+import model.SpanningTree;
 
 public class Main {
 
     public static void main(String[] args) throws IOException{
         String everything;
-        ArrayList<Edge> edges = new ArrayList<Edge>();
+        HashMap<Integer,Edge> edges = new HashMap<Integer,Edge>();
+        HashMap<Integer, ArrayList<Edge>> nodeToEdge = new HashMap<Integer,ArrayList<Edge>>();
         int idi = 0;
-        BufferedReader br = new BufferedReader(new FileReader("test01.uwg"));
+        BufferedReader br = new BufferedReader(new FileReader("testTimeGlass.uwg"));
         try {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -25,11 +29,32 @@ public class Main {
                     continue;
                 }
                 String[] split = line.split("\\s+");
-
-                edges.add(new Edge(Integer.parseInt(split[0]),
+                Edge edge = new Edge(Integer.parseInt(split[0]),
                         Integer.parseInt(split[1]),
                         Integer.parseInt(split[2]),
-                        idi));
+                        idi);
+                edges.put(idi,edge);
+                
+                
+                
+    			if(nodeToEdge.containsKey(edge.getFromNode())){
+    				nodeToEdge.get(edge.getFromNode()).add(edge);
+    			}else{
+    				ArrayList<Edge> list = new ArrayList<Edge>();
+    				list.add(edge);
+    				nodeToEdge.put(edge.getFromNode(),list);
+    			}
+    			
+    			if(nodeToEdge.containsKey(edge.getToNode())){
+    				nodeToEdge.get(edge.getToNode()).add(edge);
+    			}else{
+    				ArrayList<Edge> list = new ArrayList<Edge>();
+    				list.add(edge);
+    				nodeToEdge.put(edge.getToNode(),list);
+    			}
+                
+                
+                
                 idi++;
 
                 sb.append(line);
@@ -52,6 +77,15 @@ public class Main {
         }
 
         System.out.println(everything);
+        
+        HashSet<Integer> spanningTree = new HashSet<Integer>();
+        spanningTree.add(0);
+        spanningTree.add(2);
+        spanningTree.add(4);
+        spanningTree.add(5);
+        SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
+        
+        st.FindMFMST();
     }
 
 

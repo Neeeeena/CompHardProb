@@ -10,30 +10,25 @@ public class SpanningTree {
 	//id of edge to edge
 	HashMap<Integer,Edge> allEdges;
 	//fromNode to edge
-	HashMap<Integer, ArrayList<Edge>> nodeToEdge;
-	HashSet<Integer> allIds;
+	HashMap<Integer, ArrayList<Edge>> nodeToEdge = new HashMap<Integer,ArrayList<Edge>>();
+	HashSet<Integer> allIds = new HashSet<Integer>();
 	
-	public SpanningTree(HashSet<Integer> spanningTree, HashMap<Integer,Edge> allEdges){
+	public SpanningTree(HashSet<Integer> spanningTree, HashMap<Integer,Edge> allEdges, HashMap<Integer, ArrayList<Edge>> nodeToEdge){
 		rootST = spanningTree;
 		this.allEdges = allEdges;
-		
+		this.nodeToEdge = nodeToEdge;
 		//initialize a set of the ids of all the edges
 		for(int i = 0;i<allEdges.size();i++){
-			allIds.add(new Integer(i));
-			Edge edge = allEdges.get(i);
-			if(nodeToEdge.containsKey(edge.getFromNode())){
-				nodeToEdge.get(edge.getFromNode()).add(edge);
-			}else{
-				ArrayList<Edge> list = new ArrayList<Edge>();
-				list.add(edge);
-				nodeToEdge.put(edge.getFromNode(),list);
-			}
+			allIds.add(i);
+		
 			
 		}
 		
 		
 		
 	}
+	
+	
 	
 	public void FindMFMST(){
 		ComputationalGraphNode current = new ComputationalGraphNode(rootST,new HashSet<Integer>(),new HashSet<Integer>(),null);
@@ -42,7 +37,7 @@ public class SpanningTree {
 	
 	private void findMFMST(ComputationalGraphNode current){
 		
-			Set<Integer> notIncluded = allIds;
+			HashSet<Integer> notIncluded = (HashSet)allIds.clone();
 			//select an edge from the set of edges not in the current spanning tree and in out
 			notIncluded.removeAll(current.st);
 			notIncluded.removeAll(current.OUT);
@@ -109,25 +104,39 @@ public class SpanningTree {
 		ArrayList<GraphNode> frontier = new ArrayList<GraphNode>();
 		HashSet<Integer> path = new HashSet<Integer>();
 		path.add(addEdge.getId());
-		GraphNode node = new GraphNode(addEdge, path);
+		Integer goal = addEdge.getFromNode();
+		GraphNode node = new GraphNode(addEdge.getToNode(), path);
 		frontier.add(node);
-		
+		HashSet<Integer> visitedNode = new HashSet<Integer>();
+		visitedNode.add(addEdge.getFromNode());
 		while(!frontier.isEmpty()){
-			for(int i =0;i<frontier.size();i++){
-				ArrayList<Edge> foundEdges = nodeToEdge.get(frontier.get(i).edge.getToNode());
+				GraphNode current = frontier.get(0);
+				ArrayList<Edge> foundEdges = nodeToEdge.get(current.node);
+				
 				for(Edge edge: foundEdges){
-					HashSet<Integer> newPath = frontier.get(i).path;
-					newPath.add(edge.getId());
-					if(edge.getToNode()==addEdge.getFromNode()){
+					//if it is actually in the spanning tree and havent already been visited
+					if(gn.st.contains(edge.getId())){
+						int otherNode = 0;
+						if(edge.getToNode()==current.node){
+							otherNode = edge.getFromNode();
+						}else otherNode = edge.getToNode();
+						if(!visitedNode.contains(otherNode)){
+							HashSet<Integer> newPath = current.path;
+							newPath.add(edge.getId());
+							if(edge.getToNode()==addEdge.getFromNode() && !gn.IN.contains(edge.getId())){
+								
+								return newPath;
+							}else{
+								GraphNode newNode = new GraphNode(otherNode,newPath);
+								frontier.add(newNode);
+							}
+						}
 						
-						return newPath;
-					}else{
-						GraphNode newNode = new GraphNode(edge,newPath);
-						frontier.add(newNode);
 					}
 				}
-				
-			}
+				frontier.remove(0);
+				visitedNode.add(current.node);
+
 		}
 		
 		return null;
