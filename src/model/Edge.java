@@ -49,6 +49,15 @@ public class Edge {
     		return this.fromNode;
     	else
     		return -1;
-    				
+    }
+    
+    public Edge setFromNode(int fn) {
+    	if(this.fromNode == fn) {
+    		return this;
+    	}else if(this.toNode == fn) {
+    		return new Edge(this.toNode, this.fromNode, this.weight, this.id);
+    	}else {
+    		return null;
+    	}
     }
 }
