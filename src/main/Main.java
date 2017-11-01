@@ -86,6 +86,9 @@ public class Main {
         SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
         
         st.FindMFMST();
+        System.out.println(st.B);
+        
+        
     }
 
 
