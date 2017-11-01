@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 import model.Edge;
@@ -78,12 +79,16 @@ public class Main {
 
         System.out.println(everything);
         
+        
+        
         HashSet<Integer> spanningTree = new HashSet<Integer>();
         spanningTree.add(0);
         spanningTree.add(2);
         spanningTree.add(4);
         spanningTree.add(5);
-        SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
+       // SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
+        SpanningTree st = new SpanningTree(getInitialSpanningTree(nodeToEdge), edges, nodeToEdge);
+
         
         st.FindMFMST();
         System.out.println(st.B);
@@ -95,6 +100,30 @@ public class Main {
     private void MFSFT() {
         Stack<Edge> stack = new Stack<Edge>();
 
+    }
+    
+    private static HashSet<Integer> getInitialSpanningTree(HashMap<Integer, ArrayList<Edge>> nodeToEdge) {
+    	int nodeCursor = 1;
+    	HashSet<Integer> visitedNodes = new HashSet<Integer>();
+    	HashSet<Integer> spanningTree = new HashSet<Integer>();
+    	Stack<Edge> availableEdges = new Stack<Edge>();
+    	visitedNodes.add(1);
+    	while(visitedNodes.size() < nodeToEdge.size()) {
+    		for (Edge edge : nodeToEdge.get(nodeCursor)) {
+    			int neighbourNode = edge.getOtherNode(nodeCursor);
+    			if(!visitedNodes.contains(neighbourNode))
+    				availableEdges.add(edge.setFromNode(nodeCursor));
+    		}
+    		
+    		Edge nextEdge = availableEdges.pop();
+    		while(visitedNodes.contains(nextEdge.getToNode())) {
+    			nextEdge = availableEdges.pop();
+    		}
+    		spanningTree.add(nextEdge.getId());
+    		nodeCursor = nextEdge.getToNode();
+    		visitedNodes.add(nodeCursor);
+    	}
+    	return spanningTree;
     }
     
     
