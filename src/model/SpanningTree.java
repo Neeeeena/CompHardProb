@@ -70,7 +70,6 @@ public class SpanningTree {
 					IN.add(f);
 					
 					ComputationalGraphNode child = new ComputationalGraphNode(childST, IN,OUT,current);
-					//System.out.println("	FindMFST = " + current.weight);
 					child.weight = current.weight;
 					child.mirrorWeight = current.mirrorWeight;
 					//update the weight of the spanning tree - Still does, applies it in-function
@@ -94,14 +93,14 @@ public class SpanningTree {
 		Edge outEdge = allEdges.get(out);
 		Edge inEdge = allEdges.get(in);
 		
-		System.out.println("Weight before = " + current.weight);
-		System.out.println("Meight before = " + current.mirrorWeight);
+		//System.out.println("Weight before = " + current.weight);
+		//System.out.println("Meight before = " + current.mirrorWeight);
 		
 		current.weight += inEdge.getWeight() - outEdge.getWeight();
 		current.mirrorWeight += inEdge.getMirrorWeight() - outEdge.getMirrorWeight();
 		
-		System.out.println("Weight after  = " + current.weight);
-		System.out.println("Meight after  = " + current.mirrorWeight);
+		//System.out.println("Weight after  = " + current.weight);
+		//System.out.println("Meight after  = " + current.mirrorWeight);
 		
 		//I am confused, hello?
 		//int weight = current.weight-(outEdge.getWeight()+outEdge.getMirrorWeight()) + inEdge.getWeight()+inEdge.getMirrorWeight();
