@@ -9,6 +9,7 @@ public class ComputationalGraphNode {
 	public HashSet<Integer> OUT;
 	
 	public int weight;
+	public int mirrorWeight;
 	
 	public ComputationalGraphNode parent;
 	

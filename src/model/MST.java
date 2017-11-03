@@ -7,6 +7,7 @@ public class MST {
 	public static SpanningTree getInitialSpanningTree(HashMap<Integer, ArrayList<Edge>> nodeToEdge, HashMap<Integer,Edge> allEdges) {
     	int nodeCursor = 1;
     	int weight = 0;
+    	int mirrorWeight = 0;
     	HashSet<Integer> visitedNodes = new HashSet<Integer>();
     	HashSet<Integer> rootSpanningTree = new HashSet<Integer>();
     	Stack<Edge> availableEdges = new Stack<Edge>();
@@ -23,13 +24,16 @@ public class MST {
     			nextEdge = availableEdges.pop();
     		}
     		weight += nextEdge.getWeight();
+    		mirrorWeight += nextEdge.getMirrorWeight();
     		rootSpanningTree.add(nextEdge.getId());
     		nodeCursor = nextEdge.getToNode();
     		visitedNodes.add(nodeCursor);
     	}
     	
     	SpanningTree spanningTree = new SpanningTree(rootSpanningTree, allEdges, nodeToEdge);
-    	spanningTree.B = weight;
+    	spanningTree.weight = weight;
+    	spanningTree.mirrorWeight = mirrorWeight;
+    	spanningTree.B = Math.max(weight, mirrorWeight);
     	
     	return spanningTree;
     }

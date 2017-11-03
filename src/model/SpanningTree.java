@@ -1,10 +1,11 @@
 package model;
 import java.util.*;
 
-
 public class SpanningTree {
 
-	public int B = (int)Double.POSITIVE_INFINITY;
+	public int mirrorWeight = (int)Double.POSITIVE_INFINITY;
+	public int weight = (int)Double.POSITIVE_INFINITY;
+	public int B = Math.max(weight,mirrorWeight);
 	HashSet<Integer> rootST;
 	public HashSet<Integer> bestST;
 	//id of edge to edge
@@ -33,24 +34,27 @@ public class SpanningTree {
 	
 	
 	public void FindMFMST(){
+		//System.out.println(B);
 		ComputationalGraphNode current = new ComputationalGraphNode(rootST,new HashSet<Integer>(),new HashSet<Integer>(),null);
+		current.weight = weight;
+		current.mirrorWeight = mirrorWeight;
 		checkB(current);
 		findMFMST(current);
 	}
 	
 	private void findMFMST(ComputationalGraphNode current){
+		//System.out.println("FindMFST = " + current.weight);
+		HashSet<Integer> notIncluded = (HashSet<Integer>)allIds.clone();
+		//select an edge from the set of edges not in the current spanning tree and in out
+		notIncluded.removeAll(current.st);
+		notIncluded.removeAll(current.OUT);
 		
-			HashSet<Integer> notIncluded = (HashSet<Integer>)allIds.clone();
-			//select an edge from the set of edges not in the current spanning tree and in out
-			notIncluded.removeAll(current.st);
-			notIncluded.removeAll(current.OUT);
-			
-			HashSet<Integer> alreadySwapped = new HashSet<Integer>();
-			
-			for(Integer f : notIncluded){
-				HashSet<Integer> swaps = GetSwaps(current,f);
-				//the children must not swap with other fs!
-				if(swaps!=null){
+		HashSet<Integer> alreadySwapped = new HashSet<Integer>();
+		
+		for(Integer f : notIncluded){
+			HashSet<Integer> swaps = GetSwaps(current,f);
+			//the children must not swap with other fs!
+			if(swaps!=null){
 				for(Integer e : swaps){
 					
 					//swap edges
@@ -66,29 +70,41 @@ public class SpanningTree {
 					IN.add(f);
 					
 					ComputationalGraphNode child = new ComputationalGraphNode(childST, IN,OUT,current);
-					//update the weight of the spanning tree
-					child.weight = updateWeights(child,f,e); 
+					//System.out.println("	FindMFST = " + current.weight);
+					child.weight = current.weight;
+					child.mirrorWeight = current.mirrorWeight;
+					//update the weight of the spanning tree - Still does, applies it in-function
+					//child.weight = updateWeights(child,f,e); 
+					updateWeights(child,f,e);
 					checkB(child);
 					//depth first search
 					findMFMST(child);
 					
 					alreadySwapped.add(f);
 				}
-				}
-				
 			}
+			
+		}
 			
 		
 		
 	}
 	
-	private int updateWeights(ComputationalGraphNode current, Integer in, Integer out){
+	private void updateWeights(ComputationalGraphNode current, Integer in, Integer out){
 		Edge outEdge = allEdges.get(out);
 		Edge inEdge = allEdges.get(in);
 		
-		int weight = current.weight-(outEdge.getWeight()+outEdge.getMirrorWeight()) + inEdge.getWeight()+inEdge.getMirrorWeight();
+		System.out.println("Weight before = " + current.weight);
+		System.out.println("Meight before = " + current.mirrorWeight);
 		
-		return weight;
+		current.weight += inEdge.getWeight() - outEdge.getWeight();
+		current.mirrorWeight += inEdge.getMirrorWeight() - outEdge.getMirrorWeight();
+		
+		System.out.println("Weight after  = " + current.weight);
+		System.out.println("Meight after  = " + current.mirrorWeight);
+		
+		//I am confused, hello?
+		//int weight = current.weight-(outEdge.getWeight()+outEdge.getMirrorWeight()) + inEdge.getWeight()+inEdge.getMirrorWeight();
 		
 	}
 	
@@ -98,12 +114,19 @@ public class SpanningTree {
 		System.out.println("FOOUND SPANNING TREE");
 		while (iterator.hasNext()){
 			   System.out.print(iterator.next());
+			   System.out.print(' ');
 		}
 		
+		
 		//keep track of current best B and the matching spanning tree
-		if(node.weight<B){
+		if(node.weight<weight && node.mirrorWeight<mirrorWeight){
 			bestST = node.st;
-			B = node.weight;
+			weight = node.weight;
+			mirrorWeight = node.weight;
+			B = Math.max(mirrorWeight, weight);
+			System.out.println("\nThis is the new B: " + B);
+			System.out.println(" w: " + weight);
+			System.out.println("mw: " + mirrorWeight);
 		}
 		System.out.println("");
 	}
