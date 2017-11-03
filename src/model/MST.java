@@ -4,10 +4,11 @@ import java.util.*;
 public class MST {
 	
 
-	public static HashSet<Integer> getInitialSpanningTree(HashMap<Integer, ArrayList<Edge>> nodeToEdge) {
+	public static SpanningTree getInitialSpanningTree(HashMap<Integer, ArrayList<Edge>> nodeToEdge, HashMap<Integer,Edge> allEdges) {
     	int nodeCursor = 1;
+    	int weight = 0;
     	HashSet<Integer> visitedNodes = new HashSet<Integer>();
-    	HashSet<Integer> spanningTree = new HashSet<Integer>();
+    	HashSet<Integer> rootSpanningTree = new HashSet<Integer>();
     	Stack<Edge> availableEdges = new Stack<Edge>();
     	visitedNodes.add(1);
     	while(visitedNodes.size() < nodeToEdge.size()) {
@@ -21,10 +22,15 @@ public class MST {
     		while(visitedNodes.contains(nextEdge.getToNode())) {
     			nextEdge = availableEdges.pop();
     		}
-    		spanningTree.add(nextEdge.getId());
+    		weight += nextEdge.getWeight();
+    		rootSpanningTree.add(nextEdge.getId());
     		nodeCursor = nextEdge.getToNode();
     		visitedNodes.add(nodeCursor);
     	}
+    	
+    	SpanningTree spanningTree = new SpanningTree(rootSpanningTree, allEdges, nodeToEdge);
+    	spanningTree.B = weight;
+    	
     	return spanningTree;
     }
     

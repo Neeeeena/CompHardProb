@@ -26,11 +26,12 @@ public class Main {
             String line = br.readLine();
 
             while (line != null) {
-                if(line.length() == 1) {
+                
+                String[] split = line.split("\\s+");
+                if(split.length == 1) {
                     line = br.readLine();
                     continue;
                 }
-                String[] split = line.split("\\s+");
                 Edge edge = new Edge(Integer.parseInt(split[0]),
                         Integer.parseInt(split[1]),
                         Integer.parseInt(split[2]),
@@ -83,7 +84,7 @@ public class Main {
         */
        
        // SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
-        SpanningTree st = new SpanningTree(MST.getInitialSpanningTree(nodeToEdge), edges, nodeToEdge);
+        SpanningTree st = MST.getInitialSpanningTree(nodeToEdge, edges);
 
         
         st.FindMFMST();
