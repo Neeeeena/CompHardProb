@@ -102,12 +102,6 @@ public class Main {
         
     }
 
-
-    private void MFSFT() {
-        Stack<Edge> stack = new Stack<Edge>();
-
-    }
-    
     
     
     
