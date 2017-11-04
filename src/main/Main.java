@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
@@ -88,7 +89,15 @@ public class Main {
 
         
         st.FindMFMST();
-        System.out.println(st.B);
+        
+        System.out.println("Lowest value of B: "+st.B);
+        
+		Iterator<Integer> iterator = st.bestST.iterator(); 
+		System.out.println("Edges in the best MFMST:");
+		while (iterator.hasNext()){
+			Edge edge = edges.get(iterator.next());
+			   System.out.println(edge.getFromNode() + " "+edge.getToNode());
+		}
         
         
     }

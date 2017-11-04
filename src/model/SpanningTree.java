@@ -102,19 +102,12 @@ public class SpanningTree {
 		//System.out.println("Weight after  = " + current.weight);
 		//System.out.println("Meight after  = " + current.mirrorWeight);
 		
-		//I am confused, hello?
-		//int weight = current.weight-(outEdge.getWeight()+outEdge.getMirrorWeight()) + inEdge.getWeight()+inEdge.getMirrorWeight();
-		
+
 	}
 	
 	
 	private void checkB(ComputationalGraphNode node){
-		Iterator<Integer> iterator = node.st.iterator(); 
-		System.out.println("FOOUND SPANNING TREE");
-		while (iterator.hasNext()){
-			   System.out.print(iterator.next());
-			   System.out.print(' ');
-		}
+
 		
 		
 		//keep track of current best B and the matching spanning tree
@@ -123,11 +116,9 @@ public class SpanningTree {
 			weight = node.weight;
 			mirrorWeight = node.weight;
 			B = Math.max(mirrorWeight, weight);
-			System.out.println("\nThis is the new B: " + B);
-			System.out.println(" w: " + weight);
-			System.out.println("mw: " + mirrorWeight);
+
 		}
-		System.out.println("");
+
 	}
 	
 	private HashMap<Integer,ArrayList<Edge>> convertSTToMap(HashSet<Integer> st){
