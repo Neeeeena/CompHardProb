@@ -5,7 +5,7 @@ public class SpanningTree {
 
 	public int mirrorWeight = (int)Double.POSITIVE_INFINITY;
 	public int weight = (int)Double.POSITIVE_INFINITY;
-	public int B = Math.max(weight,mirrorWeight);
+	public int B = (int)Double.POSITIVE_INFINITY;
 	HashSet<Integer> rootST;
 	public HashSet<Integer> bestST;
 	//id of edge to edge
@@ -107,7 +107,6 @@ public class SpanningTree {
 	
 	
 	private void checkB(ComputationalGraphNode node){
-
 		//keep track of current best B and the matching spanning tree
 		if(node.weight<B && node.mirrorWeight<B){
 			bestST = node.st;

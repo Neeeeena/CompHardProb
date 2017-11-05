@@ -31,9 +31,14 @@ public class Edge {
         return id;
     }
 
-    public boolean compare(Edge e1, Edge e2) {
-        return e1.getId() == e2.getId();
+    public boolean compareTo(Edge other) {
+    	return weight < other.weight;
     }
+    
+    
+//    public boolean compare(Edge e1, Edge e2) {
+//    	return e1.getId() == e2.getId();
+//    }
 
     public int getMirrorWeight() {
         return mirrorWeight;

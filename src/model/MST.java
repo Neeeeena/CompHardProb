@@ -19,6 +19,12 @@ public class MST {
     				availableEdges.add(edge.setFromNode(nodeCursor));
     		}
     		
+    		Collections.sort(availableEdges, new Comparator<Edge>() {
+				@Override
+				public int compare(Edge e1, Edge e2) {
+					return e2.getWeight() - e1.getWeight();
+				}
+    		});
     		Edge nextEdge = availableEdges.pop();
     		while(visitedNodes.contains(nextEdge.getToNode())) {
     			nextEdge = availableEdges.pop();
@@ -33,9 +39,10 @@ public class MST {
     	SpanningTree spanningTree = new SpanningTree(rootSpanningTree, allEdges, nodeToEdge);
     	spanningTree.weight = weight;
     	spanningTree.mirrorWeight = mirrorWeight;
-    	spanningTree.B = Math.max(weight, mirrorWeight);
     	
     	return spanningTree;
     }
+	
+	
     
 }
