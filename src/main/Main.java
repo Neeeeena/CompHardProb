@@ -21,7 +21,7 @@ public class Main {
         HashMap<Integer,Edge> edges = new HashMap<Integer,Edge>();
         HashMap<Integer, ArrayList<Edge>> nodeToEdge = new HashMap<Integer,ArrayList<Edge>>();
         int idi = 0;
-        BufferedReader br = new BufferedReader(new FileReader("test03.uwg"));
+        BufferedReader br = new BufferedReader(new FileReader("test01.uwg"));
         try {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -36,7 +36,7 @@ public class Main {
                 Edge edge = new Edge(Integer.parseInt(split[0]),
                         Integer.parseInt(split[1]),
                         Integer.parseInt(split[2]),
-                        idi);
+                        idi,0);
                 edges.put(idi,edge);
                 
                 
@@ -75,14 +75,14 @@ public class Main {
         }
 
 
-   /*     for(int i = 0; i < edges.size(); i++) {
+  /*      for(int i = 0; i < edges.size(); i++) {
             System.out.println(edges.get(i).getWeight());
             System.out.println(edges.get(i).getMirrorWeight());
         }
 
         System.out.println(everything);
         
-        */
+       */ 
        
        // SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
         SpanningTree st = MST.getInitialSpanningTree(nodeToEdge, edges);

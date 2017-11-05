@@ -7,11 +7,12 @@ public class Edge {
     private int id;
     private int mirrorWeight;
 
-    public Edge(int f, int t, int w, int id){
+    public Edge(int f, int t, int w, int id, int mirrorWeight){
         this.fromNode = f;
         this.toNode = t;
         this.weight = w;
         this.id = id;
+        this.mirrorWeight = mirrorWeight;
     }
 
     public int getWeight() {
@@ -55,7 +56,7 @@ public class Edge {
     	if(this.fromNode == fn) {
     		return this;
     	}else if(this.toNode == fn) {
-    		return new Edge(this.toNode, this.fromNode, this.weight, this.id);
+    		return new Edge(this.toNode, this.fromNode, this.weight, this.id, this.mirrorWeight);
     	}else {
     		return null;
     	}

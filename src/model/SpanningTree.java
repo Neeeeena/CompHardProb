@@ -112,7 +112,7 @@ public class SpanningTree {
 		if(node.weight<B && node.mirrorWeight<B){
 			bestST = node.st;
 			weight = node.weight;
-			mirrorWeight = node.weight;
+			mirrorWeight = node.mirrorWeight;
 			B = Math.max(mirrorWeight, weight);
 
 		}
