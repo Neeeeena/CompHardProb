@@ -108,10 +108,8 @@ public class SpanningTree {
 	
 	private void checkB(ComputationalGraphNode node){
 
-		
-		
 		//keep track of current best B and the matching spanning tree
-		if(node.weight<weight && node.mirrorWeight<mirrorWeight){
+		if(node.weight<B && node.mirrorWeight<B){
 			bestST = node.st;
 			weight = node.weight;
 			mirrorWeight = node.weight;
