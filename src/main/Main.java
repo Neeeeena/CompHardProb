@@ -11,7 +11,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import model.Edge;
-import model.MST;
+import model.IST;
 import model.SpanningTree;
 
 public class Main {
@@ -21,7 +21,7 @@ public class Main {
         HashMap<Integer,Edge> edges = new HashMap<Integer,Edge>();
         HashMap<Integer, ArrayList<Edge>> nodeToEdge = new HashMap<Integer,ArrayList<Edge>>();
         int idi = 0;
-        BufferedReader br = new BufferedReader(new FileReader("test02.uwg"));
+        BufferedReader br = new BufferedReader(new FileReader("test03.uwg"));
         try {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -85,7 +85,7 @@ public class Main {
        */ 
        
        // SpanningTree st = new SpanningTree(spanningTree,edges, nodeToEdge);
-        SpanningTree st = MST.getInitialSpanningTree(nodeToEdge, edges);
+        SpanningTree st = IST.getInitialSpanningTree(nodeToEdge, edges);
 
         
         st.FindMFMST();
