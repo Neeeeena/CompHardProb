@@ -35,10 +35,6 @@ public class Edge {
     	return weight < other.weight;
     }
     
-    
-//    public boolean compare(Edge e1, Edge e2) {
-//    	return e1.getId() == e2.getId();
-//    }
 
     public int getMirrorWeight() {
         return mirrorWeight;

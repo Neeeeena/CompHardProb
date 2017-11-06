@@ -3,7 +3,6 @@ import java.util.*;
 
 public class IST {
 	
-
 	public static SpanningTree getInitialSpanningTree(HashMap<Integer, ArrayList<Edge>> nodeToEdge, HashMap<Integer,Edge> allEdges) {
     	int nodeCursor = 1;
     	int weight = 0;
@@ -35,8 +34,5 @@ public class IST {
     	spanningTree.mirrorWeight = mirrorWeight;
     	
     	return spanningTree;
-    }
-	
-	
-    
+    } 
 }

@@ -92,17 +92,9 @@ public class SpanningTree {
 	private void updateWeights(ComputationalGraphNode current, Integer in, Integer out){
 		Edge outEdge = allEdges.get(out);
 		Edge inEdge = allEdges.get(in);
-		
-		//System.out.println("Weight before = " + current.weight);
-		//System.out.println("Meight before = " + current.mirrorWeight);
-		
+
 		current.weight += inEdge.getWeight() - outEdge.getWeight();
 		current.mirrorWeight += inEdge.getMirrorWeight() - outEdge.getMirrorWeight();
-		
-		//System.out.println("Weight after  = " + current.weight);
-		//System.out.println("Meight after  = " + current.mirrorWeight);
-		
-
 	}
 	
 	
